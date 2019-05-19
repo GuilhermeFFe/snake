@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from classes import Food
 from consts import *
 from time import sleep
 
@@ -10,12 +11,20 @@ class Game:
         self.height = height
         self.running = False
         self.canvas = None
+        self.food = None
 
     def run(self):
         pygame.init()
         self.canvas = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('game')
 
+        self.food = Food(self.canvas)
+        self.gameLoop()
+
+        pygame.quit()
+        exit(0)
+
+    def gameLoop(self):
         self.running = True
         while self.running:
             for event in pygame.event.get():
@@ -24,16 +33,14 @@ class Game:
             self.tick()
             self.render()
             pygame.display.update()
-            sleep(1/FRAME_RATE)
-
-        pygame.quit()
-        exit(0)
+            sleep(1 / FRAME_RATE)
 
     def tick(self):
-        pass
+        self.food.update()
 
     def render(self):
-        pass
+        self.canvas.fill((0, 0, 0))
+        self.food.draw()
 
 
 if __name__ == '__main__':
