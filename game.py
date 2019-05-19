@@ -32,14 +32,30 @@ class Game:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.running = False
+                if event.type == KEYDOWN:
+                    self.moveSnake(event.key)
             self.tick()
             self.render()
             pygame.display.update()
             sleep(1 / FRAME_RATE)
 
+    def moveSnake(self, key):
+        if key == K_DOWN:
+            if self.snake.speed != UP:
+                self.snake.setSpeed(DOWN)
+        if key == K_UP:
+            if self.snake.speed != DOWN:
+                self.snake.setSpeed(UP)
+        if key == K_RIGHT:
+            if self.snake.speed != LEFT:
+                self.snake.setSpeed(RIGHT)
+        if key == K_LEFT:
+            if self.snake.speed != RIGHT:
+                self.snake.setSpeed(LEFT)
+
     def tick(self):
         self.food.update()
-        self.snake.update()
+        self.snake.update(self.food)
 
     def render(self):
         self.canvas.fill((0, 0, 0))

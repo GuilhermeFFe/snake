@@ -23,3 +23,6 @@ class Food:
 
     def eat(self):
         self.eaten = True
+
+    def pos(self):
+        return self.x, self.y
