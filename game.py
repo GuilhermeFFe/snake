@@ -13,6 +13,7 @@ class Game:
         self.canvas = None
         self.food = None
         self.snake = None
+        self.keyQueue = []
 
     def run(self):
         pygame.init()
@@ -29,7 +30,11 @@ class Game:
     def gameLoop(self):
         self.running = True
         while self.running:
-
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    self.running = False
+                if event.type == KEYDOWN:
+                    self.keyQueue.append(event.key)
             self.tick()
             self.render()
             pygame.display.update()
@@ -50,16 +55,11 @@ class Game:
                 self.snake.setSpeed(LEFT)
 
     def tick(self):
-        snakeMoved = False
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                self.running = False
-            if event.type == KEYDOWN:
-                if not snakeMoved:
-                    self.moveSnake(event.key)
-                    snakeMoved = True
+        if len(self.keyQueue) > 0:
+            self.moveSnake(self.keyQueue.pop(0))
         self.food.update()
         self.snake.update(self.food)
+
 
     def render(self):
         self.canvas.fill((0, 0, 0))
