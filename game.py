@@ -20,7 +20,7 @@ class Game:
         pygame.display.set_caption('game')
 
         self.food = Food(self.canvas)
-        self.snake = Snake(self.canvas, (0, 0))
+        self.snake = Snake(self.canvas, (0, 0), self)
         self.gameLoop()
 
         pygame.quit()
