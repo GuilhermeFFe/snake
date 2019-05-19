@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Food
+from classes import *
 from consts import *
 from time import sleep
 
@@ -12,6 +12,7 @@ class Game:
         self.running = False
         self.canvas = None
         self.food = None
+        self.snake = None
 
     def run(self):
         pygame.init()
@@ -19,6 +20,7 @@ class Game:
         pygame.display.set_caption('game')
 
         self.food = Food(self.canvas)
+        self.snake = Snake(self.canvas, (0, 0))
         self.gameLoop()
 
         pygame.quit()
@@ -37,10 +39,12 @@ class Game:
 
     def tick(self):
         self.food.update()
+        self.snake.update()
 
     def render(self):
         self.canvas.fill((0, 0, 0))
         self.food.draw()
+        self.snake.draw()
 
 
 if __name__ == '__main__':
