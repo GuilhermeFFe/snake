@@ -28,8 +28,9 @@ class Snake:
             self.game.running = False
 
     def draw(self):
-        for piece in self.pieces:
-            pygame.draw.rect(self.canvas, (255, 255, 255), (piece[0], piece[1], TILE_SIZE, TILE_SIZE))
+        pygame.draw.rect(self.canvas, (200, 200, 200), (self.pieces[0][0], self.pieces[0][1], TILE_SIZE, TILE_SIZE))
+        for i in range(1, len(self.pieces)):
+            pygame.draw.rect(self.canvas, (255, 255, 255), (self.pieces[i][0], self.pieces[i][1], TILE_SIZE, TILE_SIZE))
 
     def eat(self, food):
         if self.pieces[0][0] == food.pos()[0] and self.pieces[0][1] == food.pos()[1]:
@@ -37,6 +38,12 @@ class Snake:
             self.growing = True
 
     def dead(self):
+        return self.outOfScreen() or self.touchingTail()
+
+    def touchingTail(self):
+        return self.pieces[0] in self.pieces[1:]
+
+    def outOfScreen(self):
         return (self.pieces[0][0] >= self.canvas.get_width() or
                 self.pieces[0][1] >= self.canvas.get_height() or
                 self.pieces[0][0] < 0 or
