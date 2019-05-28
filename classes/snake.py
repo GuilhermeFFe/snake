@@ -11,7 +11,7 @@ class Snake:
         y = randint(0, (self.canvas.get_height() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
         self.pieces = [(x, y)]
         self.speed = (0, 0)
-        self.growing = False
+        self.growing = 0
         self.game = game
 
     def update(self, food):
@@ -19,7 +19,7 @@ class Snake:
         self.move()
         if self.growing:
             self.pieces.append(posToGrow)
-            self.growing = False
+            self.growing -= 1
         self.eat(food)
 
     def move(self):
@@ -39,7 +39,7 @@ class Snake:
     def eat(self, food):
         if self.pieces[0][0] == food.pos()[0] and self.pieces[0][1] == food.pos()[1]:
             food.eat()
-            self.growing = True
+            self.growing += GROW_BY
 
     def dead(self):
         return self.outOfScreen() or self.touchingTail()
