@@ -6,20 +6,19 @@ from random import randint
 class Food:
     def __init__(self, canvas):
         self.canvas = canvas
-        self.size = TILE_SIZE
         self.eaten = True
         self.x = None
         self.y = None
-        self.update()
+        self.update(None)
 
-    def update(self):
-        if self.eaten:
-            self.x = randint(0, (self.canvas.get_width() - self.size)/TILE_SIZE)*TILE_SIZE
-            self.y = randint(0, (self.canvas.get_height() - self.size)/TILE_SIZE)*TILE_SIZE
-            self.eaten = False
+    def update(self, snake):
+        while self.eaten:
+            self.x = randint(0, (self.canvas.get_width() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
+            self.y = randint(0, (self.canvas.get_height() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
+            self.eaten = snake is not None and (self.x, self.y) in snake.pieces
 
     def draw(self):
-        pygame.draw.rect(self.canvas, (255, 0, 0), (self.x, self.y, self.size, self.size))
+        pygame.draw.rect(self.canvas, (255, 0, 0), (self.x, self.y, TILE_SIZE, TILE_SIZE))
 
     def eat(self):
         self.eaten = True

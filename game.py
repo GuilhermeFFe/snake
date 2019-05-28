@@ -21,7 +21,7 @@ class Game:
         pygame.display.set_caption('game')
 
         self.food = Food(self.canvas)
-        self.snake = Snake(self.canvas, (0, 0), self)
+        self.snake = Snake(self.canvas, self)
         self.gameLoop()
 
         pygame.quit()
@@ -57,7 +57,7 @@ class Game:
     def tick(self):
         if len(self.keyQueue) > 0:
             self.moveSnake(self.keyQueue.pop(0))
-        self.food.update()
+        self.food.update(self.snake)
         self.snake.update(self.food)
 
 

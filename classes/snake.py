@@ -1,12 +1,16 @@
 import pygame
+from random import randint
 from consts import *
 
 
 class Snake:
-    def __init__(self, canvas, pos, game):
+    def __init__(self, canvas, game):
         self.canvas = canvas
-        self.pieces = [pos]
-        self.speed = (TILE_SIZE, 0)
+
+        x = randint(0, (self.canvas.get_width() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
+        y = randint(0, (self.canvas.get_height() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
+        self.pieces = [(x, y)]
+        self.speed = (0, 0)
         self.growing = False
         self.game = game
 
