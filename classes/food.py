@@ -18,7 +18,7 @@ class Food:
             self.eaten = snake is not None and (self.x, self.y) in snake.pieces
 
     def draw(self):
-        pygame.draw.rect(self.canvas, (255, 0, 0), (self.x, self.y, TILE_SIZE, TILE_SIZE))
+        pygame.draw.rect(self.canvas, (255, 0, 0), (self.x+1, self.y+1, TILE_SIZE-2, TILE_SIZE-2))
 
     def eat(self):
         self.eaten = True

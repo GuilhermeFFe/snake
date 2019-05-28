@@ -32,9 +32,9 @@ class Snake:
             self.game.running = False
 
     def draw(self):
-        pygame.draw.rect(self.canvas, (200, 200, 200), (self.pieces[0][0], self.pieces[0][1], TILE_SIZE, TILE_SIZE))
+        pygame.draw.rect(self.canvas, (200, 200, 200), (self.pieces[0][0]+1, self.pieces[0][1]+1, TILE_SIZE-2, TILE_SIZE-2))
         for i in range(1, len(self.pieces)):
-            pygame.draw.rect(self.canvas, (255, 255, 255), (self.pieces[i][0], self.pieces[i][1], TILE_SIZE, TILE_SIZE))
+            pygame.draw.rect(self.canvas, (255, 255, 255), (self.pieces[i][0]+1, self.pieces[i][1]+1, TILE_SIZE-2, TILE_SIZE-2))
 
     def eat(self, food):
         if self.pieces[0][0] == food.pos()[0] and self.pieces[0][1] == food.pos()[1]:
