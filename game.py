@@ -68,5 +68,5 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(400, 300)
+    game = Game(40*TILE_SIZE, 30*TILE_SIZE)
     game.run()
