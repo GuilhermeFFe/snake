@@ -6,26 +6,26 @@ from time import sleep
 
 
 class Game:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+    def __init__(self):
         self.running = False
         self.canvas = None
         self.food = None
         self.snake = None
+        self.map = None
+        self.wall = None
         self.keyQueue = []
 
     def run(self):
         pygame.init()
-        self.canvas = pygame.display.set_mode((self.width, self.height))
+        self.map = Map()
+        self.canvas = pygame.display.set_mode((self.map.width, self.map.height))
         pygame.display.set_caption('game')
-
+        self.wall = self.map.createWall(self.canvas)
         self.food = Food(self.canvas)
         self.snake = Snake(self.canvas, self)
         self.gameLoop()
 
         pygame.quit()
-        exit(0)
 
     def gameLoop(self):
         self.running = True
@@ -39,6 +39,9 @@ class Game:
             self.render()
             pygame.display.update()
             sleep(1 / FRAME_RATE)
+
+        print('You died, idiot!')
+        print('Score: ', self.snake.score)
 
     def moveSnake(self, key):
         if key == K_DOWN:
@@ -65,8 +68,9 @@ class Game:
         self.canvas.fill((0, 0, 0))
         self.food.draw()
         self.snake.draw()
+        self.wall.draw()
 
 
 if __name__ == '__main__':
-    game = Game(GAME_WIDTH, GAME_HEIGHT)
+    game = Game()
     game.run()

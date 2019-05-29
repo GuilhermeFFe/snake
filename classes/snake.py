@@ -12,6 +12,7 @@ class Snake:
         self.pieces = [(x, y)]
         self.speed = (0, 0)
         self.growing = 0
+        self.score = 0
         self.game = game
 
     def update(self, food):
@@ -40,9 +41,13 @@ class Snake:
         if self.pieces[0][0] == food.pos()[0] and self.pieces[0][1] == food.pos()[1]:
             food.eat()
             self.growing += GROW_BY
+            self.score += 1
 
     def dead(self):
-        return self.outOfScreen() or self.touchingTail()
+        return self.outOfScreen() or self.touchingTail() or self.touchingWall()
+
+    def touchingWall(self):
+        return self.pieces[0] in self.game.wall.tiles
 
     def touchingTail(self):
         return self.pieces[0] in self.pieces[1:]
