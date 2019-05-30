@@ -13,6 +13,7 @@ class Game:
         self.snake = None
         self.map = None
         self.wall = None
+        self.computer = None
         self.keyQueue = []
 
     def run(self):
@@ -24,6 +25,7 @@ class Game:
         self.wall = self.map.createWall(self)
         self.snake = Snake(self)
         self.food = Food(self)
+        self.computer = Computer(self)
         self.gameLoop()
 
         pygame.quit()
@@ -63,6 +65,8 @@ class Game:
             self.moveSnake(self.keyQueue.pop(0))
         self.food.update()
         self.snake.update()
+        if COMPUTER_PLAYING:
+            self.computer.play()
 
     def render(self):
         self.canvas.fill((0, 0, 0))
