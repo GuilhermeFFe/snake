@@ -4,24 +4,24 @@ from random import randint
 
 
 class Food:
-    def __init__(self, canvas):
-        self.canvas = canvas
+    def __init__(self, game):
+        self.game = game
         self.eaten = True
-        self.x = None
-        self.y = None
-        self.update(None)
+        self.pos = (0, 0)
+        self.update()
 
-    def update(self, snake):
+    def update(self):
         while self.eaten:
-            self.x = randint(0, (self.canvas.get_width() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
-            self.y = randint(0, (self.canvas.get_height() - TILE_SIZE)/TILE_SIZE)*TILE_SIZE
-            self.eaten = snake is not None and (self.x, self.y) in snake.pieces
+            self.pos = self.randomPos()
+            self.eaten = self.pos in self.game.snake.pieces or self.pos in self.game.wall.tiles
 
     def draw(self):
-        pygame.draw.rect(self.canvas, (255, 0, 0), (self.x+1, self.y+1, TILE_SIZE-2, TILE_SIZE-2))
+        pygame.draw.rect(self.game.canvas, (255, 0, 0), (self.pos[0]+1, self.pos[1]+1, TILE_SIZE-2, TILE_SIZE-2))
 
     def eat(self):
         self.eaten = True
 
-    def pos(self):
-        return self.x, self.y
+    def randomPos(self):
+        x = randint(0, (self.game.canvas.get_width() - TILE_SIZE) / TILE_SIZE) * TILE_SIZE
+        y = randint(0, (self.game.canvas.get_height() - TILE_SIZE) / TILE_SIZE) * TILE_SIZE
+        return x, y

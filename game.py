@@ -20,9 +20,10 @@ class Game:
         self.map = Map()
         self.canvas = pygame.display.set_mode((self.map.width, self.map.height))
         pygame.display.set_caption('game')
-        self.wall = self.map.createWall(self.canvas)
-        self.food = Food(self.canvas)
-        self.snake = Snake(self.canvas, self)
+
+        self.wall = self.map.createWall(self)
+        self.snake = Snake(self)
+        self.food = Food(self)
         self.gameLoop()
 
         pygame.quit()
@@ -60,9 +61,8 @@ class Game:
     def tick(self):
         if len(self.keyQueue) > 0:
             self.moveSnake(self.keyQueue.pop(0))
-        self.food.update(self.snake)
-        self.snake.update(self.food)
-
+        self.food.update()
+        self.snake.update()
 
     def render(self):
         self.canvas.fill((0, 0, 0))

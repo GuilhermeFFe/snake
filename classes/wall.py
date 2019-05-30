@@ -3,8 +3,8 @@ from consts import TILE_SIZE
 
 
 class Wall:
-    def __init__(self, mapData, canvas):
-        self.canvas = canvas
+    def __init__(self, mapData, game):
+        self.game = game
         self.tiles = []
         for i in range(len(mapData)):
             for j in range(len(mapData[i])):
@@ -13,4 +13,4 @@ class Wall:
 
     def draw(self):
         for tile in self.tiles:
-            pygame.draw.rect(self.canvas, (0, 0, 255), (tile[0], tile[1], TILE_SIZE, TILE_SIZE))
+            pygame.draw.rect(self.game.canvas, (0, 0, 255), (tile[0], tile[1], TILE_SIZE, TILE_SIZE))
